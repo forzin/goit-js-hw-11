@@ -3,12 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>WebGallery</title>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://pixabay.com; connect-src 'self' https://pixabay.com;">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="./css/reset.css" />
     <link rel="stylesheet" href="./css/styles.css" />
+    
   </head>
   <body>
     
-    <script type="module" src="./main.js"></script>
+    <form class="form">
+      <input class="user-input" type="text" placeholder="Search images..."/>
+      <button class="button-search" type="submit">Search</button>
+    </form>
+    <ul class="ul-gallery"></ul>
+    
+    <div class="loader-container is-hidden">
+      <span class="loader"></span>
+    </div>
+
+    <script type="module" src="./main.js" nonce="<your-nonce-value>" ></script>
   </body>
 </html>
