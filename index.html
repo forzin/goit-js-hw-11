@@ -3,14 +3,34 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>WebGallery</title>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://pixabay.com; connect-src 'self' https://pixabay.com;">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    
+    
     
     <script type="module" crossorigin src="/vanilla-app-template/commonHelpers.js"></script>
-    <link rel="stylesheet" href="/vanilla-app-template/assets/index-10c40100.css">
+    <link rel="modulepreload" crossorigin href="/vanilla-app-template/assets/vendor-8c59ed88.js">
+    <link rel="stylesheet" href="/vanilla-app-template/assets/vendor-1cd1f9d9.css">
+    <link rel="stylesheet" href="/vanilla-app-template/assets/index-c0e2c22c.css">
   </head>
   <body>
     
+    <form class="form">
+      <input class="user-input" type="text" placeholder="Search images..."/>
+      <button class="button-search" type="submit">Search</button>
+    </form>
+    <ul class="ul-gallery"></ul>
+    
+    <div class="loader-container is-hidden">
+      <span class="loader"></span>
+    </div>
+
     
   </body>
 </html>
