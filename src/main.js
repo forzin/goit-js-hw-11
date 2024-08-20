@@ -20,7 +20,7 @@ const searchForm = event => {
 
     const searchValue = form.elements.user_value.value;
     fetchPhotos(searchValue).then(data => {
-        if (data.hits.length === 0) {
+        if (searchValue.length === 0) {
             iziToast.show({
                 message: "Sorry, there are no images matching your search query. Please try again!",
 
