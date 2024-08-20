@@ -5,6 +5,9 @@ import "izitoast/dist/css/iziToast.min.css";
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
+import {createGalleryCard} from './js/render-functions';
+import {fetchPhotos} from './js/pixabay-api';
+
 let lightbox;
 
 const form = document.querySelector(`.form`);
@@ -12,40 +15,12 @@ const inputValue = document.querySelector(`input[type="text"]`);
 const gallery = document.querySelector(`.ul-gallery`);
 const loader = document.querySelector(`.loader-container`);
 
-
-const createGalleryCard = (imgInfo) => {
-    return `
-    <li class="gallery-card">
-       <a href="${imgInfo.largeImageURL}" title="${imgInfo.tags}">
-           <img class="gallery-img" src="${imgInfo.webformatURL}" alt="${imgInfo.tags}" />
-       </a>
-       <ul class="stat-img">
-           <li class="img-stat-item">Likes <span class="number-of-stat">${imgInfo.likes}</span></li>
-           <li class="img-stat-item">Views <span class="number-of-stat">${imgInfo.views}</span></li>
-           <li class="img-stat-item">Comments <span class="number-of-stat">${imgInfo.comments}</span></li>
-           <li class="img-stat-item">Downloads <span class="number-of-stat">${imgInfo.downloads}</span></li>
-       </ul>
-    </li>
-    `;
-}
-
 const searchForm = event => {
     event.preventDefault();
-    
-    gallery.innerHTML = '';
-    loader.classList.remove(`is-hidden`);
-    
-    fetch(`https://pixabay.com/api/?q=${inputValue.value}&orientation=horizontal&per_page=9&key=45497630-f588d73f1b1f7379927f92167`)
-       .then(response => {
-           if (!response.ok) {
-               throw new Error(response.status);
-           }
 
-        return response.json();
-       })
-       .then(data => {
-           
-           if (data.hits.length === 0) {
+    const searchValue = form.elements.user_value.value;
+    fetchPhotos(searchValue).then(data => {
+        if (data.hits.length === 0) {
             iziToast.show({
                 message: "Sorry, there are no images matching your search query. Please try again!",
 
@@ -59,6 +34,7 @@ const searchForm = event => {
 
                 iconUrl: `./img/icon-error.svg`,
             });
+            loader.classList.add(`is-hidden`);
            } else {
              inputValue.value = '';
              const createGallery = data.hits.map(img => createGalleryCard(img)).join('');
@@ -67,10 +43,12 @@ const searchForm = event => {
 
              loader.classList.add(`is-hidden`);
            }
-       })
-       .catch(err => {
-           console.log(err);
-       });
+    }).catch(err => {
+        console.log(err);
+    })
+    
+    gallery.innerHTML = '';
+    loader.classList.remove(`is-hidden`);
 };
 
 document.addEventListener('DOMContentLoaded', function() {
