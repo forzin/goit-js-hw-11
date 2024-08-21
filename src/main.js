@@ -18,9 +18,28 @@ const loader = document.querySelector(`.loader-container`);
 const searchForm = event => {
     event.preventDefault();
 
-    const searchValue = form.elements.user_value.value;
+    const searchValue = form.elements.user_value.value.trim();
+    
+    
+    if (searchValue === "") {
+        iziToast.show({
+            message: "Error! Please enter a search term!",
+            
+            backgroundColor: '#ef4040',
+            messageColor: '#fafafb',
+            messageSize: '16px',
+            messageLineHeight: '150%',
+            maxWidth: 432,
+            
+            position: 'topRight',
+            iconUrl: `./img/icon-error.svg`,
+        });
+        return; 
+    }
+    
+    
     fetchPhotos(searchValue).then(data => {
-        if (searchValue.length === 0) {
+        if (data.hits.length === 0) {
             iziToast.show({
                 message: "Sorry, there are no images matching your search query. Please try again!",
 
@@ -44,11 +63,22 @@ const searchForm = event => {
              loader.classList.add(`is-hidden`);
            }
     }).catch(err => {
+        iziToast.show({
+            message: "An error occurred while fetching images. Please try again.",
+            backgroundColor: '#ef4040',
+            messageColor: '#fafafb',
+            messageSize: '16px',
+            messageLineHeight: '150%',
+            maxWidth: 432,
+            position: 'topRight',
+            iconUrl: `./img/icon-error.svg`,
+        });
+        loader.classList.remove(`is-hidden`);
         console.log(err);
     })
     
     gallery.innerHTML = '';
-    loader.classList.remove(`is-hidden`);
+    
 };
 
 document.addEventListener('DOMContentLoaded', function() {
